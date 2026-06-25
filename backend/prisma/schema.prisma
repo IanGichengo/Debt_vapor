@@ -1,0 +1,343 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  ADMIN
+  COLLECTOR
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  FACEBOOK
+}
+
+enum ReminderChannel {
+  SMS
+  WHATSAPP
+}
+
+enum ReminderStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum PaymentSPlanStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum DebtType {
+  ONE_TIME
+  INSTALLMENT
+}
+
+enum CreditorType {
+  PERSON
+  COMPANY
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
+  ADJUSTMENT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// CORE MODELS
+// ============================================
+
+model User {
+  id                      String       @id @default(uuid())
+  name                    String
+  email                   String       @unique
+  password                String?
+  provider                AuthProvider @default(LOCAL)
+  providerId              String?
+  role                    Role         @default(COLLECTOR)
+  avatarUrl               String?
+  resetToken              String?
+  resetTokenExp           DateTime?
+
+  // ── Email verification (added) ──────────────
+  emailVerified           Boolean      @default(false)
+  verifyToken             String?      @unique
+  verifyTokenExpiry       DateTime?
+  // ────────────────────────────────────────────
+
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+
+  reminders               Reminder[]
+  messages                Message[]
+  logs                    Log[]
+  paymentPlans            PaymentPlan[]
+  debts                   Debt[]                      @relation("UserDebts")
+  createdDebtors          Debtor[]                    @relation("UserDebtors")
+  reminderSettings        ReminderSettings[]
+  defaultReminderSettings UserDefaultReminderSettings?
+  notificationStatuses    NotificationStatus[]        @relation("UserNotificationStatuses")
+  wallet                  Wallet?
+  walletTransactions      WalletTransaction[]
+  withdrawals             Withdrawal[]
+}
+
+model Debtor {
+  id         String   @id @default(uuid())
+  name       String
+  phone      String
+  email      String?
+  nationalId String?  @unique
+  status     String   @default("active")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+
+  user             User               @relation("UserDebtors", fields: [userId], references: [id])
+  debts            Debt[]
+  reminders        Reminder[]
+  messages         Message[]
+  paymentPlans     PaymentPlan[]
+  logs             Log[]
+  reminderSettings ReminderSettings[]
+}
+
+model Debt {
+  id           String       @id @default(uuid())
+  debtorId     String
+  userId       String
+  amount       Float
+  amountPaid   Float        @default(0)
+  dueDate      DateTime
+  debtType     DebtType     @default(ONE_TIME)
+  creditorName String?
+  creditorType CreditorType @default(COMPANY)
+  status       String       @default("pending")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  debtor Debtor @relation(fields: [debtorId], references: [id])
+  user   User   @relation("UserDebts", fields: [userId], references: [id])
+}
+
+model Reminder {
+  id           String          @id @default(uuid())
+  debtorId     String
+  userId       String
+  message      String
+  channel      ReminderChannel
+  status       ReminderStatus  @default(PENDING)
+  direction    String          @default("OUT")
+  scheduledFor DateTime?
+  sentAt       DateTime?
+  attempts     Int             @default(0)
+  metadata     Json?
+  createdAt    DateTime        @default(now())
+
+  debtor Debtor @relation(fields: [debtorId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id          String   @id @default(uuid())
+  debtorId    String
+  userId      String
+  content     String
+  direction   String
+  status      String   @default("RECEIVED")
+  channel     String   @default("WHATSAPP")
+  waMessageId String?  @unique
+  timestamp   DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  debtor Debtor @relation(fields: [debtorId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([debtorId])
+  @@index([userId])
+  @@index([timestamp])
+  @@index([debtorId, timestamp])
+}
+
+model PaymentPlan {
+  id                String             @id @default(uuid())
+  debtorId          String
+  createdById       String
+  totalAmount       Float
+  installmentAmount Float
+  frequency         String
+  nextDueDate       DateTime
+  status            PaymentSPlanStatus @default(ACTIVE)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  debtor    Debtor @relation(fields: [debtorId], references: [id])
+  createdBy User   @relation(fields: [createdById], references: [id])
+}
+
+model Log {
+  id        String   @id @default(uuid())
+  userId    String?
+  debtorId  String?
+  action    String
+  details   Json?
+  createdAt DateTime @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id])
+  debtor Debtor? @relation(fields: [debtorId], references: [id])
+}
+
+// ============================================
+// REMINDER SETTINGS
+// ============================================
+
+model ReminderSettings {
+  id           String   @id @default(uuid())
+  debtorId     String
+  userId       String
+  enabled      Boolean  @default(false)
+  interval     Int      @default(7)
+  maxReminders Int      @default(3)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  debtor Debtor @relation(fields: [debtorId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([debtorId, userId])
+  @@index([userId])
+  @@index([debtorId])
+}
+
+model UserDefaultReminderSettings {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  enabled      Boolean  @default(false)
+  interval     Int      @default(7)
+  maxReminders Int      @default(3)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ============================================
+// M-PESA
+// ============================================
+
+model MpesaTransaction {
+  id                String   @id @default(uuid())
+  checkoutRequestID String   @unique
+  merchantRequestID String
+  phone             String
+  amount            Float
+  debtId            String?
+  debtorId          String?
+  userId            String?
+  status            String   @default("PENDING")
+  receiptNumber     String?
+  errorMessage      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// ============================================
+// NOTIFICATIONS
+// ============================================
+
+model NotificationStatus {
+  id             String   @id @default(uuid())
+  userId         String
+  notificationId String
+  read           Boolean  @default(false)
+  deleted        Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation("UserNotificationStatuses", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, notificationId])
+  @@index([userId])
+  @@index([notificationId])
+  @@index([deleted, updatedAt])
+  @@map("notification_statuses")
+}
+
+// ============================================
+// WALLET
+// ============================================
+
+model Wallet {
+  id      String @id @default(uuid())
+  userId  String @unique
+  balance Float  @default(0)
+
+  user         User               @relation(fields: [userId], references: [id])
+  transactions WalletTransaction[]
+  withdrawals  Withdrawal[]
+}
+
+model WalletTransaction {
+  id        String                @id @default(uuid())
+  walletId  String
+  userId    String
+  type      WalletTransactionType
+  amount    Float
+  status    TransactionStatus     @default(COMPLETED)
+  reference String?               @unique
+  metadata  Json?
+  createdAt DateTime              @default(now())
+
+  wallet Wallet @relation(fields: [walletId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([walletId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// ============================================
+// WITHDRAWALS
+// ============================================
+
+model Withdrawal {
+  id          String           @id @default(uuid())
+  userId      String
+  walletId    String
+  amount      Float
+  phone       String
+  reason      String?
+  status      WithdrawalStatus @default(PENDING)
+  processedBy String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  wallet Wallet @relation(fields: [walletId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}

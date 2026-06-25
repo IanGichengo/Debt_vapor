@@ -1,0 +1,266 @@
+const express = require('express');
+const router = express.Router();
+const prisma = require('../../config/database');
+const authenticate = require('../../middleware/authenticate');
+
+/**
+ * @route   GET /api/debtors/:debtorId/reminder-settings
+ * @desc    Get reminder settings for a specific debtor
+ * @access  Private
+ */
+router.get('/debtors/:debtorId/reminder-settings', authenticate, async (req, res) => {
+  try {
+    const { debtorId } = req.params;
+    const userId = req.user.id;
+
+    // Check if debtor exists and belongs to user
+    const debtor = await prisma.debtor.findFirst({
+      where: {
+        id: debtorId,
+        userId: userId,
+      },
+    });
+
+    if (!debtor) {
+      return res.status(404).json({
+        success: false,
+        message: 'Debtor not found or access denied',
+      });
+    }
+
+    // Get debtor-specific settings
+    const settings = await prisma.reminderSettings.findFirst({
+      where: {
+        debtorId,
+        userId,
+      },
+    });
+
+    if (!settings) {
+      return res.status(404).json({
+        success: false,
+        message: 'No reminder settings found for this debtor',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        enabled: settings.enabled,
+        interval: settings.interval,
+        maxReminders: settings.maxReminders,
+        updatedAt: settings.updatedAt,
+      },
+    });
+
+  } catch (error) {
+    console.error('Error fetching reminder settings:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error fetching reminder settings',
+      error: error.message,
+    });
+  }
+});
+
+/**
+ * @route   PUT /api/debtors/:debtorId/reminder-settings
+ * @desc    Save/update reminder settings for a specific debtor
+ * @access  Private
+ */
+router.put('/debtors/:debtorId/reminder-settings', authenticate, async (req, res) => {
+  try {
+    const { debtorId } = req.params;
+    const { enabled, interval, maxReminders } = req.body;
+    const userId = req.user.id;
+
+    // Check if debtor exists and belongs to user
+    const debtor = await prisma.debtor.findFirst({
+      where: {
+        id: debtorId,
+        userId: userId,
+      },
+    });
+
+    if (!debtor) {
+      return res.status(404).json({
+        success: false,
+        message: 'Debtor not found or access denied',
+      });
+    }
+
+    // Validate input
+    if (typeof enabled !== 'boolean') {
+      return res.status(400).json({
+        success: false,
+        message: 'enabled must be a boolean',
+      });
+    }
+
+    if (![3, 7, 14, 30].includes(interval)) {
+      return res.status(400).json({
+        success: false,
+        message: 'interval must be 3, 7, 14, or 30 days',
+      });
+    }
+
+    if (![1, 2, 3, 5, 10].includes(maxReminders)) {
+      return res.status(400).json({
+        success: false,
+        message: 'maxReminders must be 1, 2, 3, 5, or 10',
+      });
+    }
+
+    // Upsert settings (create or update)
+    const settings = await prisma.reminderSettings.upsert({
+      where: {
+        debtorId_userId: {
+          debtorId,
+          userId,
+        },
+      },
+      update: {
+        enabled,
+        interval,
+        maxReminders,
+      },
+      create: {
+        debtorId,
+        userId,
+        enabled,
+        interval,
+        maxReminders,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Reminder settings saved successfully',
+      data: {
+        enabled: settings.enabled,
+        interval: settings.interval,
+        maxReminders: settings.maxReminders,
+        updatedAt: settings.updatedAt,
+      },
+    });
+
+  } catch (error) {
+    console.error('Error saving reminder settings:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error saving reminder settings',
+      error: error.message,
+    });
+  }
+});
+
+/**
+ * @route   GET /api/reminder-settings/defaults
+ * @desc    Get user's default reminder settings
+ * @access  Private
+ */
+router.get('/reminder-settings/defaults', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const settings = await prisma.userDefaultReminderSettings.findUnique({
+      where: { userId },
+    });
+
+    if (!settings) {
+      return res.status(404).json({
+        success: false,
+        message: 'No default reminder settings found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        enabled: settings.enabled,
+        interval: settings.interval,
+        maxReminders: settings.maxReminders,
+        updatedAt: settings.updatedAt,
+      },
+    });
+
+  } catch (error) {
+    console.error('Error fetching default reminder settings:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error fetching default settings',
+      error: error.message,
+    });
+  }
+});
+
+/**
+ * @route   PUT /api/reminder-settings/defaults
+ * @desc    Save/update user's default reminder settings
+ * @access  Private
+ */
+router.put('/reminder-settings/defaults', authenticate, async (req, res) => {
+  try {
+    const { enabled, interval, maxReminders } = req.body;
+    const userId = req.user.id;
+
+    // Validate input
+    if (typeof enabled !== 'boolean') {
+      return res.status(400).json({
+        success: false,
+        message: 'enabled must be a boolean',
+      });
+    }
+
+    if (![3, 7, 14, 30].includes(interval)) {
+      return res.status(400).json({
+        success: false,
+        message: 'interval must be 3, 7, 14, or 30 days',
+      });
+    }
+
+    if (![1, 2, 3, 5, 10].includes(maxReminders)) {
+      return res.status(400).json({
+        success: false,
+        message: 'maxReminders must be 1, 2, 3, 5, or 10',
+      });
+    }
+
+    // Upsert default settings
+    const settings = await prisma.userDefaultReminderSettings.upsert({
+      where: { userId },
+      update: {
+        enabled,
+        interval,
+        maxReminders,
+      },
+      create: {
+        userId,
+        enabled,
+        interval,
+        maxReminders,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Default reminder settings saved successfully',
+      data: {
+        enabled: settings.enabled,
+        interval: settings.interval,
+        maxReminders: settings.maxReminders,
+        updatedAt: settings.updatedAt,
+      },
+    });
+
+  } catch (error) {
+    console.error('Error saving default reminder settings:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error saving default settings',
+      error: error.message,
+    });
+  }
+});
+
+module.exports = router;
