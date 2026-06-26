@@ -23,7 +23,7 @@ export default function Footer() {
 
   const links = {
     Product:  [["Features","/features"],["Pricing","/pricing"]],
-    Company:  [["About Us","/about"],["Blog","/blog"],["Contact","/contact"]],
+    Company:  [["About Us","/about"],["Contact","/contact"]],
     Resources:[["Documentation","/documentation"],["Help Center","/help-center-public"]],
   };
 
@@ -146,7 +146,7 @@ export default function Footer() {
             dark ? "border-white/[0.06]" : "border-gray-100"
           }`}>
             <p className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-              © {currentYear} Debt Vapor. All rights reserved. Built in Nairobi, Kenya.
+              © {currentYear} Debt Vapor. All rights reserved. Nairobi, Kenya.
             </p>
 
             <div className="flex items-center gap-6">
