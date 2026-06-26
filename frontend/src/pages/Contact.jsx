@@ -118,7 +118,7 @@ export default function Contact() {
     {
       icon: <Phone className="w-5 h-5" />,
       title: "Phone Support",
-      details: ["1-800-DCS-HELP", "+1 (555) 123-4567"],
+      details: ["Coming Soon !"],
       description: "Available Mon-Fri, 9AM-6PM EST",
       color: "text-cyan-500",
       bg: dark ? "bg-cyan-500/10" : "bg-cyan-50",
@@ -126,7 +126,7 @@ export default function Contact() {
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
-      details: ["support@dcs.com", "sales@dcs.com"],
+      details: ["Coming Soon !"],
       description: "We respond within 24 hours",
       color: "text-violet-500",
       bg: dark ? "bg-violet-500/10" : "bg-violet-50",
@@ -134,7 +134,7 @@ export default function Contact() {
     {
       icon: <MapPin className="w-5 h-5" />,
       title: "Office Locations",
-      details: ["123 Finance St, New York", "456 Market Ave, London"],
+      details: ["WestLands, Nairobi. Kenya"],
       description: "Visit us during business hours",
       color: "text-blue-500",
       bg: dark ? "bg-blue-500/10" : "bg-blue-50",
@@ -143,17 +143,15 @@ export default function Contact() {
       icon: <MessageSquare className="w-5 h-5" />,
       title: "Live Chat",
       details: ["Available on website", "Mobile app support"],
-      description: "Instant response during hours",
+      description: "Instant response during business hours",
       color: "text-emerald-500",
       bg: dark ? "bg-emerald-500/10" : "bg-emerald-50",
     },
   ];
 
   const teamMembers = [
-    { name: "Sarah Johnson", role: "Sales Director", email: "sarah@dcs.com", phone: "Ext. 101", dept: "Sales" },
-    { name: "Michael Chen", role: "Support Manager", email: "michael@dcs.com", phone: "Ext. 202", dept: "Success" },
-    { name: "Emily Rodriguez", role: "Implementation", email: "emily@dcs.com", phone: "Ext. 303", dept: "Services" },
-    { name: "David Wilson", role: "Technical Support", email: "david@dcs.com", phone: "Ext. 404", dept: "Support" },
+    { name: "Mark Muroki", role: "C.E.O", email: "markmuroki@gmail.com", dept: "Administrator" },
+    { name: "Ian Gichengo", role: "C.T.O", email: "iangichengo@gmail.com", dept: "IT" },
   ];
 
   const faqs = [

@@ -108,7 +108,7 @@ export default function Solutions() {
       icon: Landmark,
       title: "Microfinance & SACCOs",
       tag: "Most Common",
-      description: "Kenya's MFIs and SACCOs deal with high volumes of small loans and frequent defaults. DCS automates the entire follow-up chain — from first WhatsApp nudge to M-Pesa STK push.",
+      description: "Kenya's MFIs and SACCOs deal with high volumes of small loans and frequent defaults. Debt Vapor automates the entire follow-up chain from first WhatsApp nudge to M-Pesa STK push.",
       features: [
         "Automated loan repayment reminders via WhatsApp",
         "M-Pesa STK push on confirmed payment intent",
@@ -123,7 +123,7 @@ export default function Solutions() {
       icon: Building2,
       title: "Banks & Lenders",
       tag: "High Volume",
-      description: "For banks and digital lenders managing hundreds of non-performing loans, DCS replaces manual call centres with an AI-powered WhatsApp agent that works 24/7.",
+      description: "For banks and digital lenders managing hundreds of non-performing loans, Debt Vapor replaces manual call centres with an AI-powered WhatsApp agent that works 24/7.",
       features: [
         "AI-powered triage: dispute, hardship, or payment-ready",
         "Automatic STK push for ready borrowers",
@@ -138,13 +138,13 @@ export default function Solutions() {
       icon: ShoppingBag,
       title: "SME Invoice Recovery",
       tag: "Growing Segment",
-      description: "Small businesses in Kenya lose significant revenue to unpaid invoices. DCS gives them an automated collections assistant that follows up professionally without awkward phone calls.",
+      description: "Small businesses in Kenya lose significant revenue to unpaid invoices. Debt Vapor gives them an automated collections assistant that follows up professionally without awkward phone calls.",
       features: [
         "WhatsApp invoice reminders with payment details",
         "M-Pesa Paybill & Till Number in every message",
         "Automatic escalation if no response after N days",
         "Payment plan negotiation handled by AI",
-        "Simple debtor onboarding — just name, phone, amount",
+        "Simple debtor onboarding - name, phone, amount",
       ],
       accent: "text-green-400",
       iconBg: dark ? "bg-green-500/10" : "bg-green-50",
@@ -153,7 +153,7 @@ export default function Solutions() {
       icon: Home,
       title: "Landlords & Property Managers",
       tag: "Rent Recovery",
-      description: "Chasing rent arrears is time-consuming and awkward. DCS handles the monthly reminder cycle automatically, escalates when tenants go silent, and accepts M-Pesa directly.",
+      description: "Chasing rent arrears is time-consuming and awkward. Debt Vapor handles the monthly reminder cycle automatically, escalates when tenants go silent, and accepts M-Pesa directly.",
       features: [
         "Monthly automated rent reminder on due date",
         "AI identifies and responds to tenant excuses intelligently",
@@ -168,7 +168,7 @@ export default function Solutions() {
       icon: Wallet,
       title: "Hire Purchase & Asset Finance",
       tag: "Instalment Recovery",
-      description: "Asset finance companies — electronics, vehicles, appliances — need consistent instalment follow-up. DCS tracks each payment plan and chases each instalment automatically.",
+      description: "Asset finance companies: electronics, vehicles, and appliances need consistent instalment follow-up. Debt Vapor tracks each payment plan and chases each instalment automatically.",
       features: [
         "Per-customer instalment schedule tracking",
         "Reminder fires on each due date automatically",
@@ -183,7 +183,7 @@ export default function Solutions() {
       icon: Users,
       title: "Chamas & Investment Groups",
       tag: "Community Finance",
-      description: "Chamas and investment clubs need a discreet, professional way to follow up on member contributions. DCS keeps it automated and non-confrontational.",
+      description: "Chamas and investment clubs need a discreet, professional way to follow up on member contributions. Debt Vapor keeps it automated and non-confrontational.",
       features: [
         "Monthly contribution reminders per member",
         "M-Pesa confirmation tracking per cycle",
@@ -197,9 +197,9 @@ export default function Solutions() {
   ];
 
   const coreCapabilities = [
-    { icon: MessageSquare, title: "WhatsApp-First",    body: "Every communication goes through WhatsApp — where Kenyans already are. No apps to download, no portals to log into.",              accent: dark ? "text-green-400 bg-green-500/10" : "text-green-600 bg-green-50" },
-    { icon: Brain,         title: "AI at the Core",    body: "Gemini AI reads every reply, classifies intent, and responds — so your team isn't spending hours on manual follow-ups.",            accent: dark ? "text-violet-400 bg-violet-500/10" : "text-violet-600 bg-violet-50" },
-    { icon: CreditCard,    title: "M-Pesa Native",     body: "STK push fires the moment a debtor signals they're ready to pay. No links, no redirects — just a PIN prompt on their phone.",      accent: dark ? "text-cyan-400 bg-cyan-500/10" : "text-cyan-600 bg-cyan-50" },
+    { icon: MessageSquare, title: "WhatsApp-First",    body: "Every communication goes through WhatsApp where Kenyans already are. No apps to download, no portals to log into.",              accent: dark ? "text-green-400 bg-green-500/10" : "text-green-600 bg-green-50" },
+    { icon: Brain,         title: "AI at the Core",    body: "Gemini AI reads every reply, classifies intent, and responds so your team isn't spending hours on manual follow-ups.",            accent: dark ? "text-violet-400 bg-violet-500/10" : "text-violet-600 bg-violet-50" },
+    { icon: CreditCard,    title: "M-Pesa Native",     body: "STK push fires the moment a debtor signals they're ready to pay. No links, no redirects just a PIN prompt on their phone.",      accent: dark ? "text-cyan-400 bg-cyan-500/10" : "text-cyan-600 bg-cyan-50" },
     { icon: RefreshCw,     title: "Set & Forget",      body: "Configure reminder schedules once per debtor. The system handles timing, frequency, and follow-through without daily oversight.",    accent: dark ? "text-orange-400 bg-orange-500/10" : "text-orange-600 bg-orange-50" },
     { icon: Shield,        title: "Secure & Private",  body: "Role-based access, JWT auth, and encrypted pipelines. Debtor data is never shared or used outside your account.",                   accent: dark ? "text-rose-400 bg-rose-500/10" : "text-rose-600 bg-rose-50" },
     { icon: BarChart3,     title: "Full Visibility",   body: "See every debt, every payment, every AI interaction in real time. Know exactly where each debtor is in the collection process.",     accent: dark ? "text-blue-400 bg-blue-500/10" : "text-blue-600 bg-blue-50" },
@@ -257,7 +257,7 @@ export default function Solutions() {
               style={{ opacity: mounted ? 1 : 0, transform: mounted ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s cubic-bezier(.22,1,.36,1) 0.35s" }}
               className={`text-lg md:text-xl max-w-2xl mx-auto leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}
             >
-              Whether you're a SACCO, bank, landlord, or SME — if you have outstanding debts and a WhatsApp number, DCS works for you.
+              Whether you're a SACCO, bank, landlord, or SME if you have outstanding debts and a WhatsApp number, Debt Vapor works for you.
             </p>
           </div>
         </section>
@@ -281,7 +281,7 @@ export default function Solutions() {
                 <span className={dark ? "text-gradient" : "text-gradient-light"}>across every solution</span>
               </h2>
               <p className={`mt-4 max-w-xl mx-auto text-base leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
-                Regardless of your industry or use case, every DCS deployment runs on the same AI, WhatsApp, and M-Pesa core.
+                Regardless of your industry or use case, every Debt Vapor deployment runs on the same AI, WhatsApp, and M-Pesa core.
               </p>
             </FadeUp>
 
@@ -321,7 +321,7 @@ export default function Solutions() {
                   </h2>
                   <div className="space-y-5">
                     {[
-                      { step: "01", text: "Member misses monthly repayment. DCS scheduler fires a WhatsApp reminder the same day." },
+                      { step: "01", text: "Member misses monthly repayment. Debt Vapor scheduler fires a WhatsApp reminder the same day." },
                       { step: "02", text: "Member replies \"nitakulipa kesho\" — AI detects payment intent, responds with STK push the next day." },
                       { step: "03", text: "Member ignores follow-ups for 7 days. AI detects silence and escalates to collector dashboard." },
                       { step: "04", text: "Member replies with hardship signal. AI proposes a restructured payment plan automatically." },
@@ -383,7 +383,7 @@ export default function Solutions() {
                     <span className={dark ? "text-gradient" : "text-gradient-light"}>with you.</span>
                   </h2>
                   <p className={`max-w-lg mx-auto mb-8 leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
-                    DCS is in active development. If you have a specific collection workflow in mind — tell us. We're working closely with early users to shape the roadmap.
+                    Debt Vapor is in active development. If you have a specific collection workflow in mind tell us. We're working closely with early users to shape the roadmap.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <button

@@ -127,18 +127,18 @@ export default function Landing() {
   useEffect(() => { setTimeout(() => setMounted(true), 80); }, []);
 
   const features = [
-    { icon: Brain,         title: "AI-Powered Conversations", description: "Gemini AI analyses debtor intent in real-time — payment readiness, emotional tone, dispute signals — and responds intelligently via WhatsApp.", accent: dark ? "bg-violet-500/10 text-violet-400" : "bg-violet-50 text-violet-600" },
+    { icon: Brain,         title: "AI-Powered Conversations", description: "Gemini AI analyses debtor intent in real-time: payment readiness, emotional tone, dispute signals and responds intelligently via WhatsApp.", accent: dark ? "bg-violet-500/10 text-violet-400" : "bg-violet-50 text-violet-600" },
     { icon: MessageSquare, title: "WhatsApp Integration",      description: "Automated two-way WhatsApp communication that reads replies, understands context, and escalates or resolves without manual input.",             accent: dark ? "bg-green-500/10 text-green-400"  : "bg-green-50 text-green-600"  },
-    { icon: CreditCard,    title: "M-Pesa STK Push",           description: "When a debtor signals payment intent, an STK push fires automatically. No links, no redirects — just a PIN prompt on their phone.",             accent: dark ? "bg-cyan-500/10 text-cyan-400"   : "bg-cyan-50 text-cyan-600"    },
+    { icon: CreditCard,    title: "M-Pesa STK Push",           description: "When a debtor signals payment intent, an STK push fires automatically. No links, no redirects just a PIN prompt on their phone.",             accent: dark ? "bg-cyan-500/10 text-cyan-400"   : "bg-cyan-50 text-cyan-600"    },
     { icon: BarChart3,     title: "Live Analytics",            description: "Track collection performance, debtor engagement, payment trends, and AI interaction outcomes from a single real-time dashboard.",                  accent: dark ? "bg-blue-500/10 text-blue-400"   : "bg-blue-50 text-blue-600"    },
-    { icon: RefreshCw,     title: "Automated Reminders",       description: "Schedule smart, configurable reminders per debtor. Set intervals, limits, and channels — the scheduler handles the rest.",                        accent: dark ? "bg-orange-500/10 text-orange-400" : "bg-orange-50 text-orange-600" },
+    { icon: RefreshCw,     title: "Automated Reminders",       description: "Schedule smart, configurable reminders per debtor. Set intervals, limits, and channels the scheduler handles the rest.",                        accent: dark ? "bg-orange-500/10 text-orange-400" : "bg-orange-50 text-orange-600" },
     { icon: Shield,        title: "Secure & Role-Based",       description: "JWT authentication, role-based access (Admin / Collector), and encrypted data pipelines keep your clients' data safe.",                          accent: dark ? "bg-rose-500/10 text-rose-400"   : "bg-rose-50 text-rose-600"    },
   ];
 
   const workflow = [
     { step: "01", title: "Add a Debtor",       body: "Enter debtor details and assign debts. The system stores contact info, debt amount, due dates, and creditor details." },
     { step: "02", title: "Send a Reminder",    body: "Trigger a WhatsApp message manually or let the automated scheduler handle it based on your configured rules." },
-    { step: "03", title: "AI Reads the Reply", body: "Gemini analyses the debtor's response — detecting payment intent, hardship, dispute, or inquiry — and responds appropriately." },
+    { step: "03", title: "AI Reads the Reply", body: "Gemini analyses the debtor's response detecting payment intent, hardship, dispute, or inquiry and responds appropriately." },
     { step: "04", title: "Payment Collected",  body: "For payment-ready debtors, an M-Pesa STK push fires instantly. The transaction is logged and the debt balance updated." },
   ];
 
@@ -209,7 +209,7 @@ export default function Landing() {
               style={{ opacity: mounted ? 1 : 0, transform: mounted ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s cubic-bezier(.22,1,.36,1) 0.35s" }}
               className={`text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 ${dark ? "text-slate-400" : "text-slate-500"}`}
             >
-              DCS combines AI conversation analysis, WhatsApp automation, and M-Pesa STK push into one seamless platform — so your team collects more with less manual effort.
+              Debt Vapor combines AI conversation analysis, WhatsApp automation, and M-Pesa STK push into one seamless platform, so your team collects more with less manual effort.
             </p>
 
             {/* CTAs */}
@@ -303,7 +303,7 @@ export default function Landing() {
                 <span className={dark ? "text-gradient" : "text-gradient-light"}>in one place</span>
               </h2>
               <p className={`mt-4 max-w-xl mx-auto text-base leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
-                Built specifically for the Kenyan market — M-Pesa native, WhatsApp first, and AI-assisted from the ground up.
+                Built specifically for the Kenyan market: M-Pesa native, WhatsApp first, and AI-assisted from the ground up.
               </p>
             </FadeUp>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -322,7 +322,7 @@ export default function Landing() {
                 <span className={dark ? "text-gradient" : "text-gradient-light"}>the Kenyan market</span>
               </h2>
               <p className={`leading-relaxed mb-8 ${dark ? "text-slate-400" : "text-slate-500"}`}>
-                Most debt collection software is built for Western markets with bolt-on integrations. DCS is built from scratch around how Kenyans actually pay — on their phones, via M-Pesa, over WhatsApp.
+                Most debt collection software is built for Western markets with bolt-on integrations. Debt Vapor is built from scratch around how Kenyans actually pay on their phones, via M-Pesa.
               </p>
               <ul className="space-y-4">
                 {[
@@ -391,10 +391,10 @@ export default function Landing() {
                     Currently in Development
                   </span>
                   <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                    Be among the first teams<br />to use DCS
+                    Be among the first teams<br />to use Debt Vapor
                   </h2>
                   <p className={`max-w-xl mx-auto mb-8 leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
-                    DCS is actively being built and tested. Join the waitlist to get early access, shape the feature roadmap, and lock in founder pricing before public launch.
+                    Debt Vapor is actively being built and tested. Join the waitlist to get early access, shape the feature roadmap, and lock in founder pricing before public launch.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link to="/signup" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-[#070d18] font-semibold rounded-xl transition-all duration-300 hover:scale-[1.02] glow-cyan">
