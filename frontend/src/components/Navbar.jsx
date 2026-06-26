@@ -84,7 +84,7 @@ export default function Navbar() {
             <button onClick={() => handleNavigation("/")} className="flex items-center gap-3 group shrink-0">
               <div className="relative">
                 <img
-                  src="/src/assets/favicon.svg"
+                  src="/favicon.svg"
                   alt="Debt Vapor Logo"
                   className="h-16 w-16"
                 />
