@@ -127,7 +127,7 @@ export default function Navbar() {
             >
               <div className="relative">
                 <img
-                  src="/logo.svg"
+                  src="/logo.png"
                   alt="Debt Vapor Logo"
                   className="h-11 w-11 md:h-16 md:w-16"
                 />
