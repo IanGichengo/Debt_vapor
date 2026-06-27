@@ -24,7 +24,7 @@ export default function Footer() {
   const links = {
     Product:  [["Features","/features"],["Pricing","/pricing"]],
     Company:  [["About Us","/about"],["Contact","/contact"]],
-    Resources:[["Documentation","/documentation"],["Help Center","/help-center-public"]],
+    Resources:[["Help Center","/help-center-public"]],
   };
 
   const socials = [

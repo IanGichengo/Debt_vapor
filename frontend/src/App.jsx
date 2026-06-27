@@ -18,7 +18,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 
 // Additional Public Pages (Placeholders)
-import Documentation from "./pages/Documentation";
 import HelpCenter from "./pages/HelpCenterPublic";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -68,7 +67,6 @@ function App() {
           <Route path="/contact" element={<Contact />} />
 
           {/* Additional Public Pages */}
-          <Route path="/documentation" element={<Documentation />} />
           <Route path="/help-center-public" element={<HelpCenter />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
