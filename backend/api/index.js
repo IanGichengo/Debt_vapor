@@ -81,11 +81,5 @@ app.use((req, res) => {
 // Global error handler (must be last)
 app.use(errorHandler);
 
-// Initialize only in non-serverless environments
-if (process.env.VERCEL !== "1") {
-  require("../src/modules/ai/reminderScheduler");
-  console.log("✓ AI Reminder Scheduler initialized");
-}
-
 module.exports = app;
 

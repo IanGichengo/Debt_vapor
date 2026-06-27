@@ -213,16 +213,19 @@ class ReminderScheduler {
   }
 }
 
-// Export singleton instance
+// Export singleton instance ONLY
 const schedulerInstance = new ReminderScheduler();
 
-// Auto-start if REMINDER_AUTO_START is true
-if (process.env.REMINDER_AUTO_START !== "false") {
-  // Delay start by 5 seconds to ensure database is connected
-  setTimeout(() => {
-    schedulerInstance.start();
-    logger.info("Reminder scheduler auto-started");
-  }, 5000);
-}
+module.exports = schedulerInstance;
+
+
+
+
+
+
+
+
+
+
 
 module.exports = schedulerInstance;
