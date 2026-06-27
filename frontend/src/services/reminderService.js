@@ -1,7 +1,9 @@
 // src/services/reminderService.js
 
 // Use import.meta.env for Vite instead of process.env
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+import { API_URL } from "../config/api";
+
+const REMINDER_API = `${API_URL}/api`;
 
 /**
  * Get reminder settings for a specific debtor

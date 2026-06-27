@@ -1,7 +1,9 @@
 // src/services/accountApi.js
 // Matches the project's fetch-based pattern in authService.js
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+import { API_URL } from "../config/api";
+
+const ACCOUNT_API = `${API_URL}/api/account`;
 
 // ============================================
 // HELPERS
